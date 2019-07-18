@@ -1,0 +1,2 @@
+"calculator", "https://play.google.com/store/apps/details?id=com.google.android.calculator&hl=en_US", "https://www.desmos.com/scientific"
+"john murch", "http://www.johnmurch.com/", "https://www.facebook.com/public/John-Murch"
