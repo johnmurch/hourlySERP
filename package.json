@@ -1,0 +1,16 @@
+{
+  "name": "hourlyserp",
+  "version": "1.0.0",
+  "description": "",
+  "main": "cron-hourly.js",
+  "scripts": {
+    "start": "node cron-hourly.js"
+  },
+  "author": "John Murch",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^8.0.0",
+    "filenamify": "^4.1.0",
+    "request": "^2.88.0"
+  }
+}
