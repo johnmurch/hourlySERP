@@ -26,20 +26,21 @@ Note: You can have as many alerts as you want, keep in mind it is based on keywo
 - Documentation
 - Error handling
 - Testing
-- support Mailgun API
+- Support Mailgun API
 - S3 integration
+- Setup Heroku Button for fast Setup/Deploy
 - Allow for alerts to match domains and not just URLs
 
 ## Getting Started
 1. Clone reports
 2. Change keywords.txt
 3. Change alerts.txt
-4. Change move env_sample to .env and update API keys
-5. Update cron-hourly.js API key and Mailgun API Key and (@todo) S3 Keys
-6. Deploy to heroku
-7. Setup heroku scheduler for every hour
-8. Wait for Alerts or Review data on S3
-9. ...
+4. Signup at [https://scrapeulous.com](https://scrapeulous.com) and get an API key
+5. Move env_sample to .env and update API keys
+6. npm start // Note you will need to remember to run every hour or setup a cron
+7. @soon - Deploy to heroku
+8. @soon - Setup heroku scheduler for every hour
+9. @soon - Wait for Alerts or Review data on S3
 10. Profit$$$ jk 🤣
 
 
