@@ -31,7 +31,7 @@ Note: You can have as many alerts as you want, keep in mind it is based on keywo
 6. npm install
 7. npm start // Note you will need to remember to run every hour or setup a cron
 8. Setup cron for each hour on cron-hourly.js
-9. Setup cron fro each hour on alerts.js
+9. Setup cron for each hour on alerts.js
 10. Wait for emails or review data
 
 ## Feedback/Thoughts/🤔
