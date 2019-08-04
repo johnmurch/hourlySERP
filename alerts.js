@@ -2,8 +2,11 @@ const fs = require('fs')
 var utils = require('./utils');
 
 // TODO:
+// DOWNLOAD S3 Files and Run
+
+// TODO:
 // Need to clean up and refactor
-// ... Get it working get it right get it fast
+// ... Get it working, get it right, get it fast
 
 // array for all files in db
 var files = []
@@ -133,9 +136,9 @@ function monitorAlerts(kwLast, kwPrev, kw) {
   var newRank = alerts[kw][0]
   var oldRank = alerts[kw][1]
 
-  if(llinks.indexOf(newRank) < plinks.indexOf(newRank)) {
+  if(llinks.indexOf(newRank) < plinks.indexOf(oldRank)) {
     var cRank = (llinks.indexOf(newRank))+1
-    var pRank = (plinks.indexOf(newRank))+1
+    var pRank = (plinks.indexOf(oldRank))+1
     console.log("*** ALERT *** ")
     console.log(`Detected on: ${ddetected} between ${pdetected} and ${ldetected}`)
     console.log(`${newRank} out ranks ${oldRank}`)

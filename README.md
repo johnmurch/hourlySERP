@@ -21,28 +21,18 @@ Note: You can have as many alerts as you want, keep in mind it is based on keywo
 * sample-responses - test files used to validate alerts and code
 * utils.js - Node.js script of all the complexity and common snippets to make all this easy to understand
 
-## RoadMap
-@TODO
-- Documentation
-- Error handling
-- Testing
-- Support Mailgun API
-- S3 integration
-- Setup Heroku Button for fast Setup/Deploy
-- Allow for alerts to match domains and not just URLs
 
 ## Getting Started
-1. Clone reports
+1. Clone reports - ``` git clone https://github.com/johnmurch/hourlySERP.git ```
 2. Change keywords.txt
 3. Change alerts.txt
 4. Signup at [https://scrapeulous.com](https://scrapeulous.com) and get an API key
 5. Move env_sample to .env and update API keys
-6. npm start // Note you will need to remember to run every hour or setup a cron
-7. @soon - Deploy to heroku
-8. @soon - Setup heroku scheduler for every hour
-9. @soon - Wait for Alerts or Review data on S3
-10. Profit$$$ jk 🤣
-
+6. npm install
+7. npm start // Note you will need to remember to run every hour or setup a cron
+8. Setup cron for each hour on cron-hourly.js
+9. Setup cron fro each hour on alerts.js
+10. Wait for emails or review data
 
 ## Feedback/Thoughts/🤔
 PRs Welcome or hit me up [@johnmurch](https://twitter.com/johnmurch)

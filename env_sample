@@ -1,1 +1,7 @@
 SCRAPEULOUS_API_KEY=XXXXXX
+accessKeyId=XXXXXX
+secretAccessKey=XXXXXX
+mailgunAPIKey=XXXXXX
+mailgunDomain=XXXXXX
+yourEmail=XXXXXX
+s3Bucket=XXXXXX

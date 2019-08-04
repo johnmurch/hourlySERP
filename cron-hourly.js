@@ -3,6 +3,7 @@ require('dotenv').config()
 const fs = require('fs');
 const path = require('path');
 const request = require('request');
+const filenamify = require('filenamify');
 // Trying to make this easier for others to pickup/reuse/hack/etc.
 // All the complexity is in the utils
 let utils = require('./utils');
@@ -63,10 +64,26 @@ request.post('https://scrapeulous.com/api/new', {
 
   for (let i = 0; i < kws.length; i++) {
     utils._log(`Keyword: ${kws[i]}`)
-    utils.saveToDisk(FOLDERPATH, body, kws[i]); // output: hello
+    // convert keywords into a safe file name for storing (json and csv)
+    const safeFilename = filenamify(kws[i]);
+    // save json and csv keyword files
+    utils.saveToDisk(FOLDERPATH, safeFilename, body, kws[i]);
+
+    /// COMMENT OUT BELOW IF YOU DON'T WANT TO SAVE TO S3
+    // csv keyword file
+    const csvFile = FOLDERPATH + '/' + safeFilename + '.csv';
+    // json keyword file
+    const jsonFile = FOLDERPATH + '/' + safeFilename + '.json';
+
+    // array of files to be uploaded to s3
+    const saveFiles = [
+      csvFile,
+      jsonFile
+    ]
+    utils.saveToS3(saveFiles);
+    /// END OF S3 Upload
   }
 
   // Exit and run node alert.js
-  utils._log('fin')
 
 }); // COMMENT OUT TO TEST WITH FAKE DATA

@@ -2,17 +2,19 @@
 * Because I am a lazy developer 🤣🤣🤣
 * Common Utilities
 */
+require('dotenv').config()
 const fs = require('fs');
 const path = require('path')
 const jsonexport = require('jsonexport');
 const filenamify = require('filenamify');
 
-// @TODO
-// const AWS = require('aws-sdk');
-// const s3 = new AWS.S3({
-//     accessKeyId: process.env.AWS_ACCESS_KEY,
-//     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
-// });
+// AWS S3
+const AWS = require('aws-sdk');
+const s3 = new AWS.S3({
+    accessKeyId: process.env.accessKeyId,
+    secretAccessKey: process.env.secretAccessKey
+});
+const s3Bucket = process.env.s3Bucket; // "hourlyserp"
 
 /*
  * saveToDisk
@@ -21,10 +23,7 @@ const filenamify = require('filenamify');
  * pre: response (body) from scrapeulous.com
  * pre: kw (keyword) from keyword.txt
  */
-exports.saveToDisk = function(foldername, body, kw) {
-  // convert keywords into a safe file name for storing
-  const safeFilename = filenamify(kw);
-
+exports.saveToDisk = function(foldername, safeFilename, body, kw) {
   // get results per page
   let page = Object.keys(body.results[kw])
 
@@ -40,6 +39,13 @@ exports.saveToDisk = function(foldername, body, kw) {
   const storeFile = foldername + '/' + safeFilename + '.json';
   module.exports._log(`WRITE ${storeFile}`)
   try {
+
+    // csv keyword file
+    const csvFile = foldername + '/' + safeFilename + '.csv';
+    // json keyword file
+    const jsonFile = foldername + '/' + safeFilename + '.json';
+
+
     fs.writeFile(storeFile, JSON.stringify(results, null, 4), function(err) {
       if (err) {
         module.exports._error(err)
@@ -56,6 +62,20 @@ exports.saveToDisk = function(foldername, body, kw) {
   const filename = foldername + '/' + safeFilename + '.csv';
   module.exports._log(`WRITE ${filename}`)
   module.exports.json2csv(results, headers, rename, filename);
+
+}
+
+/*
+ * saveToS3
+ * Logic for saving and processing data
+ * pre: saveFiles - array of files to be uploaded
+ */
+exports.saveToS3 = function(saveFiles) {
+
+  for(var i=0; i < saveFiles.length; i++){
+    module.exports.uploadToS3(saveFiles[i]);
+  }
+
 
 }
 
@@ -149,26 +169,34 @@ exports.saveAPIResponse = function(body) {
   }
 }
 
-// WIP - S3 Export
+// Upload to s3
 /*
 * uploadToS3
 * Upload file to s3
 * pre: filename - local file name
 * Bucket? Key? 🤔
 */
-exports.uploadToS3 = function(filename) {
-  fs.readFile(filename, (err, data) => {
-    if (err) throw err;
-    const params = {
-        Bucket: 'testBucket', // pass your bucket name
-        Key: 'XXX.csv', // file will be saved as testBucket/contacts.csv
-        Body: JSON.stringify(data, null, 2)
-    };
-    s3.upload(params, function(s3Err, data) {
-        if (s3Err) throw s3Err
-        module.exports._log(`File uploaded successfully at ${data.Location}`)
-    });
- });
+exports.uploadToS3 = function(inputfile) {
+  try {
+    fs.readFile(inputfile, (err, data) => {
+      if (err) throw err;
+
+      var base64data = new Buffer(data, 'binary');
+
+      const params = {
+          Bucket: s3Bucket,
+          Key: inputfile,
+          Body: base64data
+      };
+
+      s3.upload(params, function(s3Err, data) {
+          if (s3Err) throw s3Err
+          module.exports._log(`File uploaded successfully at ${data.Location}`)
+      });
+   });
+ }catch(err){
+   module.exports._log('Error writing json file:' + err.message)
+ }
 }
 
 // DATES and TIME
@@ -200,7 +228,7 @@ exports.loadData = function(path) {
   try {
     return fs.readFileSync(path, 'utf8')
   } catch (err) {
-    console.error(err)
+    module.exports._log('Error:' + err.message)
     return false
   }
 }

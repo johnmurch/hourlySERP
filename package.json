@@ -9,8 +9,10 @@
   "author": "John Murch",
   "license": "MIT",
   "dependencies": {
+    "aws-sdk": "^2.503.0",
     "dotenv": "^8.0.0",
     "filenamify": "^4.1.0",
+    "jsonexport": "^2.4.1",
     "request": "^2.88.0"
   }
 }
