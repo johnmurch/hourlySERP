@@ -71,17 +71,21 @@ request.post('https://scrapeulous.com/api/new', {
 
     /// COMMENT OUT BELOW IF YOU DON'T WANT TO SAVE TO S3
     // csv keyword file
-    const csvFile = FOLDERPATH + '/' + safeFilename + '.csv';
-    // json keyword file
-    const jsonFile = FOLDERPATH + '/' + safeFilename + '.json';
+    // check if envars set for S3
+    if(process.env.accessKeyId &&
+      process.env.secretAccessKey) {
+      const csvFile = FOLDERPATH + '/' + safeFilename + '.csv';
+      // json keyword file
+      const jsonFile = FOLDERPATH + '/' + safeFilename + '.json';
 
-    // array of files to be uploaded to s3
-    const saveFiles = [
-      csvFile,
-      jsonFile
-    ]
-    utils.saveToS3(saveFiles);
-    /// END OF S3 Upload
+      // array of files to be uploaded to s3
+      const saveFiles = [
+        csvFile,
+        jsonFile
+      ]
+      utils.saveToS3(saveFiles);
+      /// END OF S3 Upload
+    }
   }
 
   // Exit and run node alert.js

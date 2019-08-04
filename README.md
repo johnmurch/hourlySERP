@@ -27,7 +27,7 @@ Note: You can have as many alerts as you want, keep in mind it is based on keywo
 2. Change keywords.txt
 3. Change alerts.txt
 4. Signup at [https://scrapeulous.com](https://scrapeulous.com) and get an API key
-5. Move env_sample to .env and update API keys
+5. Move env_sample to .env and update API keys.
 6. npm install
 7. npm start // Note you will need to remember to run every hour or setup a cron
 8. Setup cron for each hour on cron-hourly.js
